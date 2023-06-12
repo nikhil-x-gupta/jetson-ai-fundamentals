@@ -1,0 +1,24 @@
+Getting Started with AI on Jetson Nano
+- Flash device with Jetpack and setup hardware
+- Running the device in headless mode
+- ssh into Jetson
+- mkdir ~/nvdli-data
+- run docker container:
+	sudo docker run --runtime nvidia -it --rm --network host \
+    		--volume ~/nvdli-data:/nvdli-nano/data \
+    		--device /dev/video0 \
+    		nvcr.io/nvidia/dli/dli-nano-ai:v2.0.2-r32.7.1
+- to make this a reusable script:
+	echo "sudo docker run --runtime nvidia -it --rm --network host \
+  		--volume ~/nvdli-data:/nvdli-nano/data \
+    		--device /dev/video0 \
+    		nvcr.io/nvidia/dli/dli-nano-ai:v2.0.2-r32.7.1" > docker_dli_run.sh
+- make the script executable:
+	chmod +x docker_dli_run.sh
+- run the docker:
+	docker_dli_run.sh
+- the first time, it will take time to download the docker image into the folder
+- Check for usb camera device name:
+	sudo apt-get install v4l-utils
+	v4l2-ctl --list-devices
+- Change device name in docker run script to match
